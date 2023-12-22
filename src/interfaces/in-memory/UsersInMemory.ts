@@ -1,6 +1,6 @@
-import UserRepository, { IUser } from "../../domain/repositories/userRepository"
+import { IUser } from "../../domain/repositories/userRepository"
 
-class UsersInMemory implements UserRepository {
+class UsersInMemory {
 
     public memory: IUser[]
 

@@ -7,10 +7,16 @@ export interface IUser {
 
 export default interface UserRepository {
     
-    getAll(): Promise<IUser[]>
+    getName(): string
 
-    getById(id: string): Promise<IUser[]>
+    getAge(): number
 
-    getByName(name: string): Promise<IUser[]>
+    getJob(): string
+
+    setName(name: string): void
+
+    setAge(age: number): void
+
+    setJob(job: string): void
 
 }

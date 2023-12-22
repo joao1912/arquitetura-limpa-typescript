@@ -1,17 +1,46 @@
-import UserRepository, { IUser } from "../repositories/userRepository";
+import UserRepository from "../repositories/userRepository";
 
 export class User implements UserRepository {
 
-    
+    private name: string;
+    private age: number;
+    private job: string;
+  
+    constructor(name: string, job: string, age: number) {
+      this.name = name;
+      this.age = age;
+      this.job = job;
+    }
 
-    getAll(): Promise<IUser[]> {
-        throw new Error("Method not implemented.");
+    getName(): string {
+
+        return this.name;
+
     }
-    getById(id: string): Promise<IUser[]> {
-        throw new Error("Method not implemented.");
+    getAge(): number {
+
+        return this.age;
+
     }
-    getByName(name: string): Promise<IUser[]> {
-        throw new Error("Method not implemented.");
+    getJob(): string {
+        
+        return this.job;
+
     }
-    
+    setName(name: string): void {
+        
+        this.name = name;
+
+    }
+    setAge(age: number): void {
+        
+        this.age = age;
+
+    }
+    setJob(job: string): void {
+        
+        this.job = job;
+
+    }
+
 }

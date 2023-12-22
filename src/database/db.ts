@@ -1,4 +1,4 @@
-import { Sequelize } from 'sequelize';
+import { Sequelize } from 'sequelize-typescript';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -13,6 +13,7 @@ const database = new Sequelize({
   username: process.env.DB_USERNAME || 'username',
   password: process.env.DB_PASSWORD || 'password',
   database: process.env.DB_NAME || 'database_name',
+  models: [__dirname + '/src/database/models']
 });
 
 export default database;
