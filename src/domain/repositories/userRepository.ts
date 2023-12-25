@@ -2,11 +2,11 @@ export interface IUser {
     id: string,
     name: string,
     age: number,
-    job?: string
+    job: string
 }
 
 export default interface UserRepository {
-    
+
     getName(): string
 
     getAge(): number

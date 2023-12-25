@@ -1,12 +1,27 @@
-import User from "../models/User";
+import UserModel from "../models/User";
 import { IUser } from "../../domain/repositories/userRepository";
+import { User } from "../../domain/entities/User";
 
-export class OrmUserRepository {
+export interface IOrmUserRepository {
 
-    async findAll(): Promise<User[]> { 
+    findAll(): Promise<UserModel[]>
+
+    findById(id: number): Promise<UserModel> 
+
+    findByName(name: string): Promise<UserModel> 
+
+    create(user: User): Promise<UserModel> 
+
+    update(id: string, newValue: Partial<IUser>): Promise<UserModel | null> 
+
+}
+
+export class OrmUserRepository implements IOrmUserRepository {
+
+    async findAll(): Promise<UserModel[]> { 
         try {
 
-            const user = await User.findAll() 
+            const user = await UserModel.findAll() 
 
             if (!user) {
                 throw new Error('Users not found')
@@ -19,11 +34,11 @@ export class OrmUserRepository {
         }
     }
 
-    async findById(id: number): Promise<User> {
+    async findById(id: number): Promise<UserModel> {
 
         try {
 
-            const user = await User.findByPk(id) 
+            const user = await UserModel.findByPk(id) 
 
             if (!user) {
                 throw new Error('User not found')
@@ -37,11 +52,11 @@ export class OrmUserRepository {
 
     }
 
-    async findByName(name: string): Promise<User> {
+    async findByName(name: string): Promise<UserModel> {
 
         try {
 
-            const user = await User.findOne({
+            const user = await UserModel.findOne({
                 where: {
                     name: name
                 }
@@ -59,11 +74,19 @@ export class OrmUserRepository {
 
     }
 
-    async create(newUser: Omit <IUser, 'id' >): Promise<User> {
+    async create(user: User): Promise<UserModel> {
         
         try {
+
+            const name = user.getName()
+            const age = user.getAge()
+            const job = user.getJob()
             
-            return await User.create(newUser)
+            return await UserModel.create({
+                name,
+                age,
+                job
+            })
 
         } catch (error) {
             throw new Error('Internal Server Error: ' + error)
@@ -71,11 +94,11 @@ export class OrmUserRepository {
 
     }
 
-    async update(id: string, newValue: Partial<IUser>): Promise<User | null> {
+    async update(id: string, newValue: Partial<IUser>): Promise<UserModel | null> {
 
         try {
             
-            const user = await User.findByPk(id)
+            const user = await UserModel.findByPk(id)
 
             await user?.update(newValue)
 

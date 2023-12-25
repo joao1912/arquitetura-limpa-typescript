@@ -1,33 +1,17 @@
-import { OrmUserRepository } from "../../../database/repositories/OrmUserRepository";
-import User from "../../../database/models/User";
+import { IOrmUserRepository } from "../../../database/repositories/OrmUserRepository";
+import UserModel from "../../../database/models/User";
+import { IUser } from "../../../domain/repositories/userRepository";
+import { User } from "../../../domain/entities/User";
 
 export class CreateUser {
 
-    name: string
-    age: number
-    job?: string
+    constructor(protected ormUserRepository: IOrmUserRepository) {}
 
-    constructor(name: string, age: number, job: string = '') {
+    async execute(user: IUser): Promise<UserModel> {
 
-        this.name = name
-        this.age = age
-        this.job = job
+        const newUser = new User(user.name, user.job, user.age)
 
-    }
-
-    async execute(): Promise<User> {
-
-        const ormUserRepository = new OrmUserRepository()
-
-        const newUser = {
-
-            name: this.name,
-            age: this.age,
-            job: this.job 
-
-        }
-
-        return await ormUserRepository.create(newUser)
+        return await this.ormUserRepository.create(newUser)
 
     }
 
