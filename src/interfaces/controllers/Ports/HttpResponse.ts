@@ -1,6 +1,3 @@
+import { Response } from "express";
 
-export interface HttpResponse {
-    statusCode: number,
-    message?: string,
-    data: any
-}
+export interface HttpResponse extends Response {}

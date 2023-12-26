@@ -1,12 +1,9 @@
-import { RouteExpressAdapter } from "../../adapters/RouteAdapter/RouteExpressAdapter";
+import express from 'express';
+import { UserController } from '../controllers/UserController';
 
-const routerAdapter = new RouteExpressAdapter()
+const router = express.Router();
+const userController = new UserController();
 
-routerAdapter.get('/', () => {
+router.get('/', userController.getUsers);
 
-    return Promise.resolve({})
-
-})
-
-export default routerAdapter.router
-
+export default router;

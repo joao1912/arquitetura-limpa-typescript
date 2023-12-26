@@ -7,12 +7,14 @@ export class CreateUser {
 
     constructor(protected ormUserRepository: IOrmUserRepository) {}
 
-    async execute(user: IUser): Promise<UserModel> {
+    async execute(user: IUser): Promise<IUser> {
 
         const newUser = new User(user.name, user.job, user.age)
 
-        return await this.ormUserRepository.create(newUser)
+        const result = await this.ormUserRepository.create(newUser)
 
+        return result
+            
     }
 
 }

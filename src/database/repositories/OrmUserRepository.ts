@@ -4,37 +4,49 @@ import { User } from "../../domain/entities/User";
 
 export interface IOrmUserRepository {
 
-    findAll(): Promise<UserModel[]>
+    findAll(): Promise<IUser[]>
 
-    findById(id: number): Promise<UserModel> 
+    findById(id: string): Promise<IUser> 
 
-    findByName(name: string): Promise<UserModel> 
+    findByName(name: string): Promise<IUser> 
 
-    create(user: User): Promise<UserModel> 
+    create(user: User): Promise<IUser> 
 
-    update(id: string, newValue: Partial<IUser>): Promise<UserModel | null> 
+    update(id: string, newValue: Partial<IUser>): Promise<IUser | null> 
+
+    delete(id: string): void
 
 }
 
 export class OrmUserRepository implements IOrmUserRepository {
 
-    async findAll(): Promise<UserModel[]> { 
+    async findAll(): Promise<IUser[]> { 
         try {
 
-            const user = await UserModel.findAll() 
+            const users = await UserModel.findAll() 
 
-            if (!user) {
+            if (!users) {
                 throw new Error('Users not found')
             }
 
-            return user
+            const usersAsUsers: IUser[] = users.map((user: UserModel) => {
+                
+                return {
+                    id: user.id,
+                    name: user.name,
+                    age:  user.age,
+                    job: user.job
+                }
+            });
+
+            return usersAsUsers;
 
         } catch (error) {
             throw new Error('Internal Server Error: ' + error)
         }
     }
 
-    async findById(id: number): Promise<UserModel> {
+    async findById(id: string): Promise<IUser> {
 
         try {
 
@@ -52,7 +64,7 @@ export class OrmUserRepository implements IOrmUserRepository {
 
     }
 
-    async findByName(name: string): Promise<UserModel> {
+    async findByName(name: string): Promise<IUser> {
 
         try {
 
@@ -74,7 +86,7 @@ export class OrmUserRepository implements IOrmUserRepository {
 
     }
 
-    async create(user: User): Promise<UserModel> {
+    async create(user: User): Promise<IUser> {
         
         try {
 
@@ -94,7 +106,7 @@ export class OrmUserRepository implements IOrmUserRepository {
 
     }
 
-    async update(id: string, newValue: Partial<IUser>): Promise<UserModel | null> {
+    async update(id: string, newValue: Partial<IUser>): Promise<IUser | null> {
 
         try {
             
@@ -106,6 +118,21 @@ export class OrmUserRepository implements IOrmUserRepository {
 
         } catch (error) {
             throw new Error('Internal Server Error: ' + error)
+        }
+    }
+
+    async delete(id: string): Promise<void> {
+        
+        try {
+            
+            await UserModel.destroy({
+                where: {
+                    id: id
+                }
+            })
+
+        } catch (error) {
+            throw new Error('Bad Request: ' + error)
         }
     }
 

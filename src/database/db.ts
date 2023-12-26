@@ -1,19 +1,22 @@
 import { Sequelize } from 'sequelize-typescript';
-import dotenv from 'dotenv';
 
-dotenv.config();
 
-type Dialect = 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | undefined;
+//type Dialect = 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | undefined;
 
-const dialect: Dialect = process.env.DB_DIALECT as Dialect || 'postgres';
+//const dialect: Dialect = process.env.DB_DIALECT as Dialect || 'postgres';
 
 const database = new Sequelize({
-  dialect,
-  host: process.env.DB_HOST || 'localhost',
-  username: process.env.DB_USERNAME || 'username',
-  password: process.env.DB_PASSWORD || 'password',
-  database: process.env.DB_NAME || 'database_name',
+  dialect:'postgres',
+  host: 'localhost',
+  username: 'postgres',
+  password: 'angelica125',
+  database: 'arquiteturaLimpa',
   models: [__dirname + '/src/database/models']
 });
+
+(async function(){
+  await database.sync()
+})()
+
 
 export default database;

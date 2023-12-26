@@ -1,6 +1,10 @@
 import { IUser } from "../../domain/repositories/userRepository"
+import { IOrmUserRepository } from "../../database/repositories/OrmUserRepository"
+import UserModel from "../../database/models/User"
+import { User } from "../../domain/entities/User"
 
-class UsersInMemory {
+
+class UsersInMemory implements IOrmUserRepository {
 
     public memory: IUser[]
 
@@ -8,7 +12,15 @@ class UsersInMemory {
         this.memory = []
     }
 
-    getAll(): Promise<IUser[]> {
+    private createId(): string {
+
+        const newId = Math.floor(Math.random() * 100000)
+
+        return newId.toString()
+
+    }
+
+    findAll(): Promise<IUser[]> {
 
         const users = this.memory
 
@@ -16,7 +28,7 @@ class UsersInMemory {
 
     }
 
-    getById(id: string): Promise<IUser[]> {
+    findById(id: string): Promise<IUser> {
         
         let user = this.memory.filter(user => user.id == id)
 
@@ -24,11 +36,11 @@ class UsersInMemory {
             throw new Error('User not found')
         }
 
-        return Promise.resolve(user)
+        return Promise.resolve(user[0])
 
     }
 
-    getByName(name: string): Promise<IUser[]> {
+    findByName(name: string): Promise<IUser> {
         
         let user = this.memory.filter(user => user.name == name)
 
@@ -36,8 +48,33 @@ class UsersInMemory {
             throw new Error('User not found')
         }
 
-        return Promise.resolve(user)
+        return Promise.resolve(user[0])
 
+    }
+
+    create(user: User): Promise<IUser> {
+        
+        const name = user.getName()
+        const age = user.getAge()
+        const job = user.getJob()
+
+        const newUser: IUser = {
+            id: this.createId(),
+            name,
+            age,
+            job
+        }
+
+        this.memory.push(newUser)
+
+       return Promise.resolve(newUser)
+
+    }
+    update(id: string, newValue: Partial<IUser>): Promise<IUser | null> {
+        throw new Error("Method not implemented.")
+    }
+    delete(id: string): void {
+        throw new Error("Method not implemented.")
     }
 
 }

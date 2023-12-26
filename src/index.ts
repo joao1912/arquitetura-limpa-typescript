@@ -1,13 +1,11 @@
 import dotenv from 'dotenv';
 import { Server } from './server';
 import { ExpressAdapter } from './adapters/HTTPAdapter/ExpressAdapter';
-import userRoute from "./interfaces/routes/userRoute"
+import { HTTPAdapterRepository } from './adapters/HTTPAdapter/repository/HTTPAdapterRepository';
 
-dotenv.config();
+export const env = dotenv.config().parsed;
 
-const HTTPAdapter = new ExpressAdapter()
+const HTTPAdapter: HTTPAdapterRepository = new ExpressAdapter()
 const server = new Server(HTTPAdapter)
-
-HTTPAdapter.useRoute('/user', userRoute)
 
 server.start()

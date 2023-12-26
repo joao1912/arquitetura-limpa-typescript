@@ -1,6 +1,2 @@
-
-export interface HttpRequest {
-    body?: any
-    headers?: any
-    params?: any
-}
+import { Request } from "express";
+export interface HttpRequest extends Request {}
