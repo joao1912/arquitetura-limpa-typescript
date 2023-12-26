@@ -7,6 +7,8 @@ export interface IUser {
 
 export default interface UserRepository {
 
+    getId(): string | undefined
+
     getName(): string
 
     getAge(): number

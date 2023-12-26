@@ -2,14 +2,21 @@ import UserRepository from "../repositories/userRepository";
 
 export class User implements UserRepository {
 
+    private id?: string
     private name: string;
     private age: number;
     private job: string;
   
-    constructor(name: string, job: string, age: number) {
+    constructor(name: string, job: string, age: number, id?: string) {
       this.name = name;
       this.age = age;
       this.job = job;
+      this.id = id || undefined
+    }
+
+    getId(): string | undefined {
+
+        return this.id
     }
 
     getName(): string {

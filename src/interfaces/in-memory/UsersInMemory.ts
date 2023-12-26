@@ -1,16 +1,12 @@
 import { IUser } from "../../domain/repositories/userRepository"
 import { IOrmUserRepository } from "../../database/repositories/OrmUserRepository"
-import UserModel from "../../database/models/User"
 import { User } from "../../domain/entities/User"
+import { IUserCreated } from "../../application/useCases/user/CreateUser"
 
 
 class UsersInMemory implements IOrmUserRepository {
 
-    public memory: IUser[]
-
-    constructor() {
-        this.memory = []
-    }
+    private memory: IUser[] = []
 
     private createId(): string {
 
@@ -22,7 +18,7 @@ class UsersInMemory implements IOrmUserRepository {
 
     findAll(): Promise<IUser[]> {
 
-        const users = this.memory
+        const users = [...this.memory]
 
         return Promise.resolve(users)
 
@@ -52,13 +48,13 @@ class UsersInMemory implements IOrmUserRepository {
 
     }
 
-    create(user: User): Promise<IUser> {
+    create(user: User): Promise<IUserCreated> {
         
         const name = user.getName()
         const age = user.getAge()
         const job = user.getJob()
 
-        const newUser: IUser = {
+        const newUser: IUserCreated = {
             id: this.createId(),
             name,
             age,
@@ -67,14 +63,18 @@ class UsersInMemory implements IOrmUserRepository {
 
         this.memory.push(newUser)
 
-       return Promise.resolve(newUser)
+        return Promise.resolve(newUser)
 
     }
-    update(id: string, newValue: Partial<IUser>): Promise<IUser | null> {
+    update(id: string, newValue: Partial<IUserCreated>): Promise<IUserCreated | null> {
         throw new Error("Method not implemented.")
     }
     delete(id: string): void {
         throw new Error("Method not implemented.")
+    }
+
+    deleteAll(): void {
+        this.memory = []
     }
 
 }

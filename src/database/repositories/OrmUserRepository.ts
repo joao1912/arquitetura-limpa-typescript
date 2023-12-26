@@ -1,6 +1,7 @@
 import UserModel from "../models/User";
 import { IUser } from "../../domain/repositories/userRepository";
 import { User } from "../../domain/entities/User";
+import { IUserCreated } from "../../application/useCases/user/CreateUser";
 
 export interface IOrmUserRepository {
 
@@ -10,11 +11,13 @@ export interface IOrmUserRepository {
 
     findByName(name: string): Promise<IUser> 
 
-    create(user: User): Promise<IUser> 
+    create(user: User): Promise<IUserCreated> 
 
     update(id: string, newValue: Partial<IUser>): Promise<IUser | null> 
 
     delete(id: string): void
+
+    deleteAll(): void
 
 }
 
@@ -86,7 +89,7 @@ export class OrmUserRepository implements IOrmUserRepository {
 
     }
 
-    async create(user: User): Promise<IUser> {
+    async create(user: User): Promise<IUserCreated> {
         
         try {
 
@@ -130,6 +133,16 @@ export class OrmUserRepository implements IOrmUserRepository {
                     id: id
                 }
             })
+
+        } catch (error) {
+            throw new Error('Bad Request: ' + error)
+        }
+    }
+
+    async deleteAll() {
+        try {
+            
+            await UserModel.destroy()
 
         } catch (error) {
             throw new Error('Bad Request: ' + error)
