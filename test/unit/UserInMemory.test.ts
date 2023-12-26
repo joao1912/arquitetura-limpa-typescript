@@ -83,6 +83,24 @@ describe('this will test the user use cases in memory', () => {
 
     })
 
+    it('should be return a user updated in memory', async () => {
+
+        const newValue = {
+            name: 'teste_atualizado',
+            job: 'developer_typescript'
+        }
+
+        const userUpdated = await userService.update(idUserTest, newValue)
+
+        expect(userUpdated).toEqual({
+            id: idUserTest,
+            age: userTest.age,
+            name: newValue.name,
+            job: newValue.job
+        })
+
+    })
+
     afterAll( () => {
 
         userService.deleteAll()

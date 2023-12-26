@@ -66,9 +66,39 @@ class UsersInMemory implements IOrmUserRepository {
         return Promise.resolve(newUser)
 
     }
-    update(id: string, newValue: Partial<IUserCreated>): Promise<IUserCreated | null> {
-        throw new Error("Method not implemented.")
+
+    update(id: string, newValue: Partial<IUserCreated>): Promise<IUserCreated> {
+
+        const users = [...this.memory]
+        
+        const index = users.findIndex(user => user.id == id)
+
+        if (index == -1) {
+            
+            throw new Error('User not found with that id')
+            
+        }
+
+        let userUpdated = {} as IUserCreated;
+
+        for (let prop in users[index]) {
+
+            if (newValue.hasOwnProperty(prop)) {
+
+                userUpdated[prop] = newValue[prop]
+
+            } else {
+
+                userUpdated[prop] = users[index][prop]
+
+            }
+            
+        }
+
+        return Promise.resolve(userUpdated)
+
     }
+
     delete(id: string): void {
         throw new Error("Method not implemented.")
     }
