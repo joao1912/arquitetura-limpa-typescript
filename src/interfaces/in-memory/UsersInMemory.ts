@@ -70,13 +70,12 @@ class UsersInMemory implements IOrmUserRepository {
     update(id: string, newValue: Partial<IUserCreated>): Promise<IUserCreated> {
 
         const users = [...this.memory]
-        
         const index = users.findIndex(user => user.id == id)
 
         if (index == -1) {
             
             throw new Error('User not found with that id')
-            
+
         }
 
         let userUpdated = {} as IUserCreated;
@@ -95,12 +94,27 @@ class UsersInMemory implements IOrmUserRepository {
             
         }
 
+        users.splice(index, 1, userUpdated)
+
+        this.memory = users
+
         return Promise.resolve(userUpdated)
 
     }
 
     delete(id: string): void {
-        throw new Error("Method not implemented.")
+        
+        const users = [...this.memory]
+
+        try {
+            
+            const usersMemoryUpdated = users.filter(user => user.id != id)
+            this.memory = usersMemoryUpdated
+
+        } catch (error) {
+            throw new Error('The server failed to delete a user by ID')
+        }
+
     }
 
     deleteAll(): void {

@@ -12,6 +12,7 @@ const userTest = {
 }
 
 let idUserTest: string
+let idUserForDelete: string
 
 describe('this will test the user use cases in memory', () => {
 
@@ -21,7 +22,10 @@ describe('this will test the user use cases in memory', () => {
 
         const reponse = await createUser.execute(userTest)
 
+        const reponseUserForDelete = await createUser.execute(userTest)
+
         idUserTest = reponse.id
+        idUserForDelete = reponseUserForDelete.id
             
     })
 
@@ -99,6 +103,18 @@ describe('this will test the user use cases in memory', () => {
             job: newValue.job
         })
 
+    })
+
+    it('should delete a user by id',async () => {
+        
+        userService.delete(idUserForDelete)
+
+        expect(() => userService.findById(idUserForDelete)).toThrow('User not found');
+        
+        expect(() => {
+            userService.delete(idUserForDelete);
+        }).not.toThrow('The server failed to delete a user by ID');
+        
     })
 
     afterAll( () => {

@@ -1,6 +1,7 @@
 import { HTTPAdapterRepository } from "./repository/HTTPAdapterRepository";
-import express, { Application, Router } from "express";
+import express, { Application, Request, Response, NextFunction } from "express";
 import userRoute from "../../interfaces/routes/userRoute"
+import 'express-async-errors';
 
 
 export class ExpressAdapter implements HTTPAdapterRepository {
@@ -23,6 +24,19 @@ export class ExpressAdapter implements HTTPAdapterRepository {
 
         this.app.use(express.json())
         this.app.use(express.urlencoded({extended: true}))
+        this.app.use(
+            (err: Error, request: Request, response: Response, next: NextFunction) => {
+              if (err instanceof Error) {
+                return response.status(400).json({
+                  message: err.message,
+                });
+              }
+              return response.status(500).json({
+                status: "error",
+                message: `Internal server error - ${err}`,
+              });
+            }
+        );
 
     }
 
