@@ -2,7 +2,6 @@ import { CreateUser } from "../../src/application/useCases/user/CreateUser"
 import UsersInMemory from "../../src/interfaces/in-memory/UsersInMemory"
 const userService = new UsersInMemory()
 
-
 const userTest = {
 
     name: 'nome_teste',
@@ -115,12 +114,6 @@ describe('this will test the user use cases in memory', () => {
             userService.delete(idUserForDelete);
         }).not.toThrow('The server failed to delete a user by ID');
         
-    })
-
-    afterAll( () => {
-
-        userService.deleteAll()
-
     })
 
 })
