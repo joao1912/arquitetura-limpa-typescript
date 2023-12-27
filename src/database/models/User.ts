@@ -6,6 +6,8 @@ class User extends Model {
     age: number;
     name: string;
     id: string;
+    createdAt: string;
+    updatedAt: string;
 }
 
 User.init(

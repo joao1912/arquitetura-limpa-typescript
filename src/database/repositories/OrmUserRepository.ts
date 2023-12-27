@@ -2,6 +2,7 @@ import UserModel from "../models/User";
 import { IUser } from "../../domain/repositories/userRepository";
 import { User } from "../../domain/entities/User";
 import { IUserCreated } from "../../application/useCases/user/CreateUser";
+import { WhereOptions } from "sequelize";
 
 export interface IOrmUserRepository {
 
@@ -17,11 +18,33 @@ export interface IOrmUserRepository {
 
     delete(id: string): void
 
-    deleteAll(): void
+    deleteAll(config?: IConfigDestroy): void
 
 }
 
+export interface IConfigDestroy {
+    truncate: boolean,
+    where: WhereOptions
+}
+
+export interface IUserNormilized extends Omit<UserModel, 'createdAt' | 'updatedAt'> {
+    updatedAt?: string,
+    createdAt?: string
+}
+
 export class OrmUserRepository implements IOrmUserRepository {
+
+    private normalizeUser(user: UserModel | null) {
+
+        if (!user) {
+            throw new Error('User not found')
+        }
+
+        const {createdAt, updatedAt, ...userNormalized} = user.dataValues
+
+        return userNormalized
+
+    }
 
     async findAll(): Promise<IUser[]> { 
         try {
@@ -117,7 +140,7 @@ export class OrmUserRepository implements IOrmUserRepository {
 
             await user?.update(newValue)
 
-            return user
+            return this.normalizeUser(user)
 
         } catch (error) {
             throw new Error('Internal Server Error: ' + error)
@@ -139,10 +162,10 @@ export class OrmUserRepository implements IOrmUserRepository {
         }
     }
 
-    async deleteAll() {
+    async deleteAll(config: IConfigDestroy) {
         try {
             
-            await UserModel.destroy()
+            await UserModel.destroy(config)
 
         } catch (error) {
             throw new Error('Bad Request: ' + error)
