@@ -1,13 +1,22 @@
 import { IOrmUserRepository } from "../../../database/repositories/OrmUserRepository";
 
-export class GetUser {
+export class GetUsers {
 
     constructor(protected ormUserRepository: IOrmUserRepository) {}
 
-    async execute(id: string) {
+    async execute(id?: string) {
 
-        return this.ormUserRepository.findById(id)
+        if (id) {
 
+            return this.ormUserRepository.findById(id)
+
+        } else {
+
+            return this.ormUserRepository.findAll()
+
+        }
+
+        
     }
 
 }

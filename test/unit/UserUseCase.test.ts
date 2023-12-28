@@ -1,4 +1,6 @@
 import { CreateUser } from "../../src/application/useCases/user/CreateUser"
+import { DeleteUser } from "../../src/application/useCases/user/DeleteUser"
+import { GetAllUsers } from "../../src/application/useCases/user/GetAllUsers"
 import { UpdateUser } from "../../src/application/useCases/user/UpdateUser"
 import { OrmUserRepository } from "../../src/database/repositories/OrmUserRepository"
 
@@ -55,6 +57,26 @@ describe('this will test the user use cases', () => {
             age: userTest.age,
             job: newValues.job
         })
+
+    })
+
+    it('should not return error when delete a user', async () => {
+
+        const deleteUser = new DeleteUser(userService)
+
+        const result = await deleteUser.execute(idUserToDelete)
+
+        expect(result).not.toThrow('Bad Request: can not delete user')
+
+    })
+
+    it('should return at least one user', async () => {
+
+        const getUsers = new GetAllUsers(userService)
+
+        const result = await getUsers.execute()
+
+        expect(result.length).toBeGreaterThan(1)
 
     })
 
