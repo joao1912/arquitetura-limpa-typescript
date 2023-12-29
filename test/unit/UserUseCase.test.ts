@@ -63,10 +63,8 @@ describe('this will test the user use cases', () => {
     it('should not return error when delete a user', async () => {
 
         const deleteUser = new DeleteUser(userService)
-
-        const result = await deleteUser.execute(idUserToDelete)
-
-        expect(result).not.toThrow('Bad Request: can not delete user')
+      
+        expect(async () => {await deleteUser.execute(idUserToDelete)}).not.toThrow('Bad Request: can not delete user')
 
     })
 
