@@ -1,2 +1,5 @@
 import { Request } from "express";
-export interface HttpRequest extends Request {}
+import { JwtPayload } from "jsonwebtoken";
+export interface HttpRequest extends Request {
+    token?: JwtPayload | string
+}
