@@ -7,7 +7,7 @@ export class UpdateUser {
 
     constructor(protected ormUserRepository: IOrmUserRepository) {}
 
-    async execute(id: string, newValues: Partial<IUser>) {
+    async execute(id: string, newValues: Partial<IUser>): Promise<IUser | null> {
 
         try {
 

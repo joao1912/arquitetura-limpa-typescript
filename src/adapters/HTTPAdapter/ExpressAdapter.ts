@@ -46,4 +46,8 @@ export class ExpressAdapter implements HTTPAdapterRepository {
 
     }
 
+    public getApp() {
+      return this.app
+    }
+
 }
