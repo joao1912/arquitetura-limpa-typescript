@@ -5,7 +5,8 @@
   "main": "src/index.ts",
   "scripts": {
     "start": "ts-node-dev src/index.ts",
-    "test:unit": "jest test/unit --detectOpenHandles"
+    "test:unit": "jest test/unit --detectOpenHandles",
+    "test:func": "jest test/functional --detectOpenHandles"
   },
   "keywords": [],
   "author": "",

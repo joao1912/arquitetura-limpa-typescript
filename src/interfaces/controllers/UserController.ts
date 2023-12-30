@@ -65,9 +65,11 @@ export class UserController implements UserControllerRepository {
     async createUser(req: HttpRequest, res: HttpResponse): Promise<void> {
         throw new Error("Method not implemented.");
     }
+
     async updateUser(req: HttpRequest, res: HttpResponse): Promise<void> {
         throw new Error("Method not implemented.");
     }
+    
     async deleteUser(req: HttpRequest, res: HttpResponse): Promise<void> {
         throw new Error("Method not implemented.");
     }
