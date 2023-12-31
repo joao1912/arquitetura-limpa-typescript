@@ -6,11 +6,10 @@
 import dotenv from 'dotenv'
 dotenv.config()
 
-import express, { Router } from 'express';
 
 export default {
     // All imported modules in your tests should be mocked automatically
-    // automock: false,
+    automock: true,
   
     // Stop running tests after `n` failures
     // bail: 0,

@@ -1,7 +1,5 @@
 import request from "supertest"
 import { ExpressAdapter } from "../../src/adapters/HTTPAdapter/ExpressAdapter"
-import { CreateUser } from "../../src/application/useCases/user/CreateUser"
-import { OrmUserRepository } from "../../src/database/repositories/OrmUserRepository"
 
 const HttpAdapter = new ExpressAdapter()
 const app = HttpAdapter.getApp()
