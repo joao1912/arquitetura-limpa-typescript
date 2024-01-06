@@ -1,11 +1,11 @@
-import { GetAllUsers } from "../../application/useCases/user/GetAllUsers";
-import { OrmUserRepository } from "../../database/repositories/OrmUserRepository";
-import { HttpRequest } from "./Ports/HttpRequest";
-import { HttpResponse } from "./Ports/HttpResponse";
-import { IUser } from "../../domain/repositories/userRepository";
-import { UserControllerRepository } from "./repositories/UserControllerRepository";
-import { IUserCreated } from "../../application/useCases/user/CreateUser";
-import { GetUsers } from "../../application/useCases/user/GetUser";
+import { GetAllUsers } from "../../application/useCases/user/GetAllUsers.ts";
+import { OrmUserRepository } from "../../database/repositories/OrmUserRepository.ts";
+import { HttpRequest } from "./Ports/HttpRequest.ts";
+import { HttpResponse } from "./Ports/HttpResponse.ts";
+import { IUser } from "../../domain/repositories/userRepository.ts";
+import { UserControllerRepository } from "./repositories/UserControllerRepository.ts";
+import { CreateUser, IUserCreated } from "../../application/useCases/user/CreateUser.ts";
+import { GetUsers } from "../../application/useCases/user/GetUser.ts";
 
 interface IBodyResponse {
     data: any
@@ -63,7 +63,28 @@ export class UserController implements UserControllerRepository {
     }
 
     async createUser(req: HttpRequest, res: HttpResponse): Promise<void> {
-        throw new Error("Method not implemented.");
+        
+        const {name, age, job} = req.body;
+
+        const createUser = new CreateUser(userService)
+
+        try {
+
+            const newUser = await createUser.execute({name, age, job})
+
+            const bodyResponse: IBodyResponse = {
+                data: newUser,
+                message: 'User Created'
+            }
+
+            res.status(200).json(bodyResponse)
+
+        } catch (error) {
+            console.log(error)
+            throw new Error('Bad Request')
+        }
+        
+
     }
 
     async updateUser(req: HttpRequest, res: HttpResponse): Promise<void> {

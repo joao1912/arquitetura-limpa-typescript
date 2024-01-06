@@ -1,37 +1,53 @@
-import { Model, DataTypes } from "sequelize";
-import database from "../db";
+import { Model, DataTypes, Sequelize, Optional } from 'sequelize';
+import database from '../db.ts'; 
 
-class User extends Model {
-    public id!: string;
-    public name!: string;
-    public age!: number;
-    public job!: string;
+interface UserAttributes {
+  id: string;
+  name: string;
+  age: number;
+  job: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
 
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
+interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
+
+class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
+  public id!: string;
+  public name!: string;
+  public age!: number;
+  public job!: string;
+  public createdAt?: string;
+  public updatedAt?: string;
 
 }
 
 User.init(
-    {
-        name: {
-            type: DataTypes.STRING(50),
-            allowNull: false,
-        },
-        age: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
-        job: {
-            type: DataTypes.STRING,
-            allowNull: true
-        }
+  {
+    id: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
     },
-    {
-        sequelize: database,
-        tableName: 'users',
-        modelName: 'User'
-    }
-)
+    name: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+    },
+    age: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    job: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+  },
+  {
+    sequelize: database,
+    tableName: 'users',
+    modelName: 'User', 
+  }
+);
 
-export default User
+export default User;

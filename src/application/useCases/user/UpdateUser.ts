@@ -1,6 +1,5 @@
-import UserModel from "../../../database/models/User";
-import { IOrmUserRepository } from "../../../database/repositories/OrmUserRepository";
-import { IUser } from "../../../domain/repositories/userRepository";
+import { IOrmUserRepository } from "../../../database/repositories/OrmUserRepository.ts";
+import { IUser } from "../../../domain/repositories/userRepository.ts";
 
 
 export class UpdateUser {

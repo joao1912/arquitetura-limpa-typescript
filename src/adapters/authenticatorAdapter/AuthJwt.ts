@@ -1,13 +1,13 @@
 import { NextFunction } from "express";
-import { HttpRequest } from "../../interfaces/controllers/Ports/HttpRequest";
-import { HttpResponse } from "../../interfaces/controllers/Ports/HttpResponse";
-import { authenticatorAdapterRepository } from "./repository/authenticatorAdapterRepository";
-import jwt, {JwtPayload, Secret} from "jsonwebtoken"
+import { HttpRequest } from "../../interfaces/controllers/Ports/HttpRequest.ts";
+import { HttpResponse } from "../../interfaces/controllers/Ports/HttpResponse.ts";
+import { authenticatorAdapterRepository } from "./repository/authenticatorAdapterRepository.ts";
+import * as jwt from "jsonwebtoken"
 
 
 export class AuthJwt implements authenticatorAdapterRepository {
 
-    auth(req: HttpRequest, res: HttpResponse, next: NextFunction) {
+    async auth(req: HttpRequest, res: HttpResponse, next: NextFunction): Promise<void> {
 
         const SECRET_KEY = process.env.JWT_SECRETKEY || ''
 
@@ -36,7 +36,7 @@ export class AuthJwt implements authenticatorAdapterRepository {
 
         const secret_key = process.env.JWT_SECRETKEY
 
-        if (secret_key) {
+        if (!secret_key) {
             throw new Error('internal server error')
         }
 

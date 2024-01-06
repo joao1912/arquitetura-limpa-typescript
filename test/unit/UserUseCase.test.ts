@@ -1,8 +1,8 @@
-import { CreateUser } from "../../src/application/useCases/user/CreateUser"
-import { DeleteUser } from "../../src/application/useCases/user/DeleteUser"
-import { GetAllUsers } from "../../src/application/useCases/user/GetAllUsers"
-import { UpdateUser } from "../../src/application/useCases/user/UpdateUser"
-import { OrmUserRepository } from "../../src/database/repositories/OrmUserRepository"
+import { CreateUser } from "../../src/application/useCases/user/CreateUser.ts"
+import { DeleteUser } from "../../src/application/useCases/user/DeleteUser.ts"
+import { GetAllUsers } from "../../src/application/useCases/user/GetAllUsers.ts"
+import { UpdateUser } from "../../src/application/useCases/user/UpdateUser.ts"
+import { OrmUserRepository } from "../../src/database/repositories/OrmUserRepository.ts"
 
 const userService = new OrmUserRepository()
 

@@ -1,4 +1,4 @@
-import { HTTPAdapterRepository } from "./adapters/HTTPAdapter/repository/HTTPAdapterRepository";
+import { HTTPAdapterRepository } from "./adapters/HTTPAdapter/repository/HTTPAdapterRepository.ts";
 
 
 export class Server {

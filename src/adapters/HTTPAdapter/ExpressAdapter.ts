@@ -1,15 +1,16 @@
-import { HTTPAdapterRepository } from "./repository/HTTPAdapterRepository";
-import express, { Application, Request, Response, NextFunction } from "express";
-import userRoute from "../../interfaces/routes/userRoute"
+import { HTTPAdapterRepository } from "./repository/HTTPAdapterRepository.ts";
+import { Application, Request, Response, NextFunction } from "express";
+import express from "express"
+import userRoute from "../../interfaces/routes/userRoute.ts";
 import 'express-async-errors';
-
 
 export class ExpressAdapter implements HTTPAdapterRepository {
 
     private app: Application;
 
     constructor() {
-        this.app = express();
+      
+        this.app = express()
     }
 
     public use(handler: any): void {
@@ -40,13 +41,14 @@ export class ExpressAdapter implements HTTPAdapterRepository {
 
     }
 
-    public setRoutes() {
+    public setRoutes(): void {
 
         this.app.use('/users', userRoute)
 
     }
 
-    public getApp() {
+    public getApp(): Application {
+      this.setRoutes()
       return this.app
     }
 

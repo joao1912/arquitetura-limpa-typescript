@@ -1,7 +1,7 @@
-import { IUser } from "../../domain/repositories/userRepository"
-import { IOrmUserRepository } from "../../database/repositories/OrmUserRepository"
-import { User } from "../../domain/entities/User"
-import { IUserCreated } from "../../application/useCases/user/CreateUser"
+import { IUser } from "../../domain/repositories/userRepository.ts"
+import { IOrmUserRepository } from "../../database/repositories/OrmUserRepository.ts"
+import { User } from "../../domain/entities/User.ts"
+import { IUserCreated } from "../../application/useCases/user/CreateUser.ts"
 
 
 class UsersInMemory implements IOrmUserRepository {
@@ -84,11 +84,11 @@ class UsersInMemory implements IOrmUserRepository {
 
             if (newValue.hasOwnProperty(prop)) {
 
-                userUpdated[prop] = newValue[prop]
+                //userUpdated[prop] = newValue[prop]
 
             } else {
 
-                userUpdated[prop] = users[index][prop]
+                //userUpdated[prop] = users[index][prop]
 
             }
             

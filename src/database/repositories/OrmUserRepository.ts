@@ -1,7 +1,7 @@
-import UserModel from "../models/User";
-import { IUser } from "../../domain/repositories/userRepository";
-import { User } from "../../domain/entities/User";
-import { IUserCreated } from "../../application/useCases/user/CreateUser";
+import UserModel from "../models/User.ts";
+import { IUser } from "../../domain/repositories/userRepository.ts";
+import { User } from "../../domain/entities/User.ts";
+import { IUserCreated } from "../../application/useCases/user/CreateUser.ts";
 import { WhereOptions } from "sequelize";
 
 export interface IOrmUserRepository {

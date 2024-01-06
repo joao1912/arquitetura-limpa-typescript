@@ -1,4 +1,4 @@
-import { IOrmUserRepository } from "../../../database/repositories/OrmUserRepository";
+import { IOrmUserRepository } from "../../../database/repositories/OrmUserRepository.ts";
 
 export class GetAllUsers {
 
@@ -7,7 +7,7 @@ export class GetAllUsers {
     async execute() {
 
        
-        return this.ormUserRepository.findAll()
+        return await this.ormUserRepository.findAll()
 
         
     }

@@ -1,5 +1,5 @@
-import { HttpRequest } from "../Ports/HttpRequest";
-import { HttpResponse } from "../Ports/HttpResponse";
+import { HttpRequest } from "../Ports/HttpRequest.ts";
+import { HttpResponse } from "../Ports/HttpResponse.ts";
 
 export interface UserControllerRepository {
 

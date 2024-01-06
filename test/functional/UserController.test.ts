@@ -1,8 +1,11 @@
-import request from "supertest"
-import { ExpressAdapter } from "../../src/adapters/HTTPAdapter/ExpressAdapter"
+import request from 'supertest';
+import { ExpressAdapter } from "../../src/adapters/HTTPAdapter/ExpressAdapter.ts"
+import { CreateUser } from '../../src/application/useCases/user/CreateUser.ts';
+import { OrmUserRepository } from '../../src/database/repositories/OrmUserRepository.ts';
+import { AuthJwt } from '../../src/adapters/authenticatorAdapter/AuthJwt.ts';
+
 
 const HttpAdapter = new ExpressAdapter()
-const app = HttpAdapter.getApp()
 
 const userByCreate = {
     name: '_teste_',
@@ -10,15 +13,40 @@ const userByCreate = {
     job: 'tester'
 }
 
+const app = HttpAdapter.getApp()
+let adminId: string
+
 describe('this test will execute methods from controller', () => {
+
+    beforeAll(async () => {
+
+        const createUser = new CreateUser(new OrmUserRepository())
+
+        const userAdmin = {
+            name: 'admin',
+            age: 0,
+            job: 'admin'
+        }
+
+        createUser.execute(userAdmin)
+            .then(response => {
+                adminId = response.id
+            })
+
+    })
 
     it('should return all users', async () => {
 
+        const authService = new AuthJwt() 
+        const token = authService.createToken(adminId)
+
         const users = await request(app)
-            .get('/users/')
+            .get('/users')
+            .set('Authorization', token)
 
         expect(users.status).toBe(200)
-
+        expect(users.body).toBeTruthy()
+       
         
     })
 
@@ -27,10 +55,10 @@ describe('this test will execute methods from controller', () => {
         const response = await request(app)
             .post('/users/add')
             .send(userByCreate)
-
-        expect(3 + 3).toBe(200)
+          
+        expect(response.status).toBe(200)
         expect(response.body).toHaveProperty('id')
-
+       
     })
 
 })

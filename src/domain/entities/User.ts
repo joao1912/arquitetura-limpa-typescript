@@ -1,4 +1,4 @@
-import UserRepository from "../repositories/userRepository";
+import UserRepository from "../repositories/userRepository.ts";
 
 export class User implements UserRepository {
 

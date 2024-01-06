@@ -1,6 +1,6 @@
-import { IOrmUserRepository } from "../../../database/repositories/OrmUserRepository";
-import { IUser } from "../../../domain/repositories/userRepository";
-import { User } from "../../../domain/entities/User";
+import { IOrmUserRepository } from "../../../database/repositories/OrmUserRepository.ts";
+import { IUser } from "../../../domain/repositories/userRepository.ts";
+import { User } from "../../../domain/entities/User.ts";
 
 export interface IUserCreated extends IUser {
     id: string
