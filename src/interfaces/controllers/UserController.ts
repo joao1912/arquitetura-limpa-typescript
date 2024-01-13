@@ -6,6 +6,9 @@ import { IUser } from "../../domain/repositories/userRepository.ts";
 import { UserControllerRepository } from "./repositories/UserControllerRepository.ts";
 import { CreateUser, IUserCreated } from "../../application/useCases/user/CreateUser.ts";
 import { GetUsers } from "../../application/useCases/user/GetUser.ts";
+import User from "../../database/models/User.ts";
+import { UpdateUser } from "../../application/useCases/user/UpdateUser.ts";
+import { DeleteUser } from "../../application/useCases/user/DeleteUser.ts";
 
 interface IBodyResponse {
     data: any
@@ -88,13 +91,47 @@ export class UserController implements UserControllerRepository {
     }
 
     async updateUser(req: HttpRequest, res: HttpResponse): Promise<void> {
-        throw new Error("Method not implemented.");
+        
+        const userToUpdate: Partial<User> = req.body.user
+
+        const updateUser = new UpdateUser(userService)
+
+        if (!userToUpdate.id) {
+            throw new Error('Bad Request: ' + error')
+        }
+
+        const updatedUser = await updateUser.execute(userToUpdate.id, userToUpdate)
+
+        const bodyResponse: IBodyResponse = {
+            data: updatedUser,
+            message: 'User Created'
+        }
+
+        res.status(200).json(bodyResponse)
+
     }
     
     async deleteUser(req: HttpRequest, res: HttpResponse): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
+        
+        const { id } = req.body;
 
-    
+        const deleteUser = new DeleteUser(userService)
+
+        try {
+            
+            await deleteUser.execute(id)
+
+            const bodyResponse: IBodyResponse = {
+                data: null,
+                message: 'User Deleted'
+            }
+
+            res.status(200).json(bodyResponse)
+
+        } catch (error) {
+            throw new Error('Bad Request: ' + error)
+        }
+
+    }
 
 }

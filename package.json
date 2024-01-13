@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ts-node-dev src/index.ts",
     "test:unit": "jest test/unit --detectOpenHandles",
-    "test:func": "jest test/functional --detectOpenHandles"
+    "test:func": "jest test/functional --forceExit --detectOpenHandles"
   },
   "keywords": [],
   "author": "",

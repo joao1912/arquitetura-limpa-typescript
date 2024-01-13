@@ -10,4 +10,6 @@ router.get('/', authJwt.auth ,userController.getUsers);
 
 router.post('/add', userController.createUser)
 
+router.put('/update', userController.updateUser)
+
 export default router;
