@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize-typescript';
 
+
 type Dialect = 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | undefined;
 
 const dialect: Dialect = process.env.DB_DIALECT as Dialect || 'postgres';

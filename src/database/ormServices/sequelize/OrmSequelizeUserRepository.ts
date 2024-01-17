@@ -1,38 +1,15 @@
-import UserModel from "../models/User.ts";
-import { IUser } from "../../domain/repositories/userRepository.ts";
-import { User } from "../../domain/entities/User.ts";
-import { IUserCreated } from "../../application/useCases/user/CreateUser.ts";
-import { WhereOptions } from "sequelize";
-
-export interface IOrmUserRepository {
-
-    findAll(): Promise<IUser[]>
-
-    findById(id: string): Promise<IUser> 
-
-    findByName(name: string): Promise<IUser> 
-
-    create(user: User): Promise<IUserCreated> 
-
-    update(id: string, newValue: Partial<IUser>): Promise<IUser | null> 
-
-    delete(id: string): void
-
-    deleteAll(config?: IConfigDestroy): void
-
-}
-
-export interface IConfigDestroy {
-    truncate: boolean,
-    where: WhereOptions
-}
+import UserModel from "../../models/User.ts";
+import { IUser } from "../../../domain/repositories/userRepository.ts";
+import { User } from "../../../domain/entities/User.ts";
+import { IUserCreated } from "../../../application/useCases/user/CreateUser.ts";
+import { IOrmUserRepository } from "../repositories/OrmUserRepository.ts";
 
 export interface IUserNormilized extends Omit<UserModel, 'createdAt' | 'updatedAt'> {
     updatedAt?: string,
     createdAt?: string
 }
 
-export class OrmUserRepository implements IOrmUserRepository {
+class OrmSequelizeUserRepository implements IOrmUserRepository {
 
     private normalizeUser(user: UserModel | null) {
 
@@ -162,7 +139,7 @@ export class OrmUserRepository implements IOrmUserRepository {
         }
     }
 
-    async deleteAll(config: IConfigDestroy) {
+    async deleteAll(config: any) {
         try {
             
             await UserModel.destroy(config)
@@ -173,3 +150,5 @@ export class OrmUserRepository implements IOrmUserRepository {
     }
 
 }
+
+export default OrmSequelizeUserRepository

@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { ExpressAdapter } from "../../src/adapters/HTTPAdapter/ExpressAdapter.ts"
 import { CreateUser } from '../../src/application/useCases/user/CreateUser.ts';
-import { OrmUserRepository } from '../../src/database/repositories/OrmUserRepository.ts';
+import { OrmUserRepository } from '../../src/database/ormServices/repositories/OrmUserRepository.ts';
 import { AuthJwt } from '../../src/adapters/authenticatorAdapter/AuthJwt.ts';
 
 

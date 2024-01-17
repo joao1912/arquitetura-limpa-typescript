@@ -1,4 +1,4 @@
-import { IOrmUserRepository } from "../../../database/repositories/OrmUserRepository.ts";
+import { IOrmUserRepository } from "../../../database/ormServices/repositories/OrmUserRepository.ts";
 import { IUser } from "../../../domain/repositories/userRepository.ts";
 
 

@@ -1,5 +1,5 @@
 import { IUser } from "../../domain/repositories/userRepository.ts"
-import { IOrmUserRepository } from "../../database/repositories/OrmUserRepository.ts"
+import { IOrmUserRepository } from "../../database/ormServices/repositories/OrmUserRepository.ts"
 import { User } from "../../domain/entities/User.ts"
 import { IUserCreated } from "../../application/useCases/user/CreateUser.ts"
 

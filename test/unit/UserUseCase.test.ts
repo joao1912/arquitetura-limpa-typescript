@@ -2,7 +2,7 @@ import { CreateUser } from "../../src/application/useCases/user/CreateUser.ts"
 import { DeleteUser } from "../../src/application/useCases/user/DeleteUser.ts"
 import { GetAllUsers } from "../../src/application/useCases/user/GetAllUsers.ts"
 import { UpdateUser } from "../../src/application/useCases/user/UpdateUser.ts"
-import { OrmUserRepository } from "../../src/database/repositories/OrmUserRepository.ts"
+import { OrmUserRepository } from "../../src/database/ormServices/repositories/OrmUserRepository.ts"
 
 const userService = new OrmUserRepository()
 

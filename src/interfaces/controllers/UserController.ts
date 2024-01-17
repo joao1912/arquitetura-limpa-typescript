@@ -1,5 +1,5 @@
 import { GetAllUsers } from "../../application/useCases/user/GetAllUsers.ts";
-import { OrmUserRepository } from "../../database/repositories/OrmUserRepository.ts";
+import { OrmPrismaUserRepository } from "../../database/ormServices/prisma/OrmPrismaUserRepository.ts";
 import { HttpRequest } from "./Ports/HttpRequest.ts";
 import { HttpResponse } from "./Ports/HttpResponse.ts";
 import { IUser } from "../../domain/repositories/userRepository.ts";
@@ -15,7 +15,7 @@ interface IBodyResponse {
     message: string
 }
 
-const userService = new OrmUserRepository()
+const userService = new OrmPrismaUserRepository()
 
 export class UserController implements UserControllerRepository {
 
@@ -97,7 +97,7 @@ export class UserController implements UserControllerRepository {
         const updateUser = new UpdateUser(userService)
 
         if (!userToUpdate.id) {
-            throw new Error('Bad Request: ' + error')
+            throw new Error('Bad Request: Not found id')
         }
 
         const updatedUser = await updateUser.execute(userToUpdate.id, userToUpdate)
